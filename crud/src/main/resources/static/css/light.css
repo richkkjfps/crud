@@ -1,0 +1,80 @@
+/* Light surfaces, solid controls and clear visual hierarchy. */
+:root{color-scheme:light;--bg:#f3f6fb;--surface:#fff;--surface-2:#f8fafc;--accent:#2563eb;--text:#17243b;--muted:#58677e;--border:#dce4ef;background:#f3f6fb;color:#17243b}
+html,body,body:not(.access-page),.access-page{background:#f3f6fb;background-image:none;color:#17243b;color-scheme:light;font-family:Segoe UI,Arial,sans-serif}
+body:not(.access-page) main{background:transparent;color:#17243b}
+body:not(.access-page) aside{background:#fff;color:#17243b;border-right:1px solid #dce4ef;box-shadow:3px 0 18px #17243b05}
+#account-name,#page-title,#list-title,#commerce-title{color:#17243b}
+body:not(.access-page) aside nav{scrollbar-color:#cad5e5 #fff}
+main{padding:30px 32px}
+.brand,.brand span,.access-brand,.access-brand span{color:#17243b}.brand{color:#2563eb}
+h1,h2,h3,.access-intro h1,.access-intro h1 span,.access-intro h1 strong,.access-card>h2{color:#17243b}
+.subtitle,.toolbar p,.nav-label,.platform-label,.field-help,.aside-footer,.product-selected,.access-intro p,.access-intro-note,.access-brand small,.access-card>p,.access-benefits p,.access-footer,.access-help,.profit-summary p,.cash-report>p,.shortcuts-list dd{color:#58677e}
+.eyebrow,.access-forgot{color:#2563eb}
+.catalog,.cash-dashboard,.access-card,dialog{background:#fff!important;color:#17243b;border:1px solid #d9e2ef;border-radius:14px;box-shadow:0 6px 22px #1f3b6410}
+.cash-dashboard{border-top:4px solid #2563eb;padding:22px 24px}
+.catalog .toolbar{background:#fff;border-bottom:1px solid #e5ebf3}
+.catalog-filters{background:#f8fafc;border-bottom:1px solid #e5ebf3}
+table,thead,tbody,tr{background:#fff;color:#17243b}
+thead th{background:#eef3fb!important;color:#44546e;border-color:#dce4ef;font-size:11px;font-weight:700;letter-spacing:.35px;padding:14px 12px}
+tbody td{background:#fff!important;color:#27364e;border-bottom:1px solid #e8edf5;border-right:1px solid #eef2f7;padding:13px 12px}
+tbody tr:nth-child(even) td{background:#f8fafd!important}
+tbody tr:hover td{background:#edf4ff!important}
+tbody tr td:first-child{border-left:3px solid #dce7f8}
+.inventory-group td{background:#fff!important;color:var(--group-color,#2563eb);padding-top:24px;padding-bottom:13px;border-left:4px solid var(--group-color,#2563eb)!important;font-weight:650}
+footer{color:#58677e;border-color:#e5ebf3;background:#fff}
+body button{background:#2563eb;background-image:none;border:1px solid #2563eb;color:#fff;border-radius:8px;font-weight:600;box-shadow:0 2px 5px #2563eb15;transition:background .15s,border-color .15s,box-shadow .15s}
+body button:hover{background:#1d4ed8;border-color:#1d4ed8;color:#fff;box-shadow:0 4px 10px #2563eb25}
+body button:focus-visible{outline:3px solid #bfdbfe;outline-offset:2px}
+body button.secondary,body button.icon,body .shortcut-help{background:#fff;color:#42536e;border-color:#cfd9e8;box-shadow:none}
+body button.secondary:hover,body button.icon:hover,body .shortcut-help:hover{background:#edf4ff;color:#1d4ed8;border-color:#93b5ed}
+body button.delete{background:#fff1f2;color:#b42332;border-color:#fecdd3;box-shadow:none}
+body button.delete:hover{background:#ffe4e6;color:#9f1239;border-color:#fda4af}
+body .nav{background:transparent;color:#53627a;border:1px solid transparent;box-shadow:none;font-weight:500;border-radius:8px;padding:12px}
+body .nav:hover{background:#f1f5fc;color:#1d4ed8;border-color:#e0e8f5}
+body .nav.active{background:#e9f1ff;color:#1d4ed8;border-color:#cdddff;font-weight:650;box-shadow:inset 3px 0 #2563eb}
+body .sales-nav{border-left:3px solid #2563eb}
+body .sale-launch,body .sales-focus button,body .access-submit{background:#2563eb;color:#fff;border-color:#2563eb;box-shadow:0 5px 14px #2563eb25}
+body .sale-launch:hover,body .access-submit:hover{background:#1d4ed8;color:#fff}
+body button:disabled,body .access-submit:disabled{background:#e8edf5;color:#718099;border-color:#dce4ef;box-shadow:none;opacity:1;cursor:not-allowed}
+.account-avatar{background:#e8f0ff;color:#2563eb;border:1px solid #cdddff}
+body input,body select,body textarea,.access-card input{background:#fff!important;color:#17243b;border:1px solid #c7d3e3;border-radius:8px;box-shadow:0 1px 2px #17243b05}
+body input:focus,body select:focus,body textarea:focus,.access-card input:focus{outline:3px solid #dbeafe;outline-offset:0;border-color:#5287e8;box-shadow:none}
+body input:disabled,body select:disabled{background:#f1f5f9!important;color:#687890}
+input::placeholder,textarea::placeholder,.access-card input::placeholder{color:#7b889c}
+label,.access-card label{color:#33445e;font-weight:600}
+dialog{box-shadow:0 24px 70px #17243b40}
+dialog::backdrop{background:#17243b80}
+.cash-stat{background:#eff5ff!important;border:1px solid #dbe7fa;border-left:4px solid #3b82f6;border-radius:9px;padding:15px 16px}
+.cash-stat:nth-child(2){background:#f5f1ff!important;border-color:#e5dcfa;border-left-color:#8b5cf6}
+.cash-stat:nth-child(3){background:#fffaeb!important;border-color:#f6e7bd;border-left-color:#e9a122}
+.cash-stat:nth-child(4){background:#edf9f3!important;border-color:#cdebdc;border-left-color:#22a76f}
+.cash-stat span{color:#52627b}.cash-stat strong{color:#17243b;font-size:23px;letter-spacing:-.5px}
+.cash-report .cash-stat strong{font-size:20px}
+.sales-focus{background:#eef5ff!important;background-image:none;border:1px solid #d4e3fa;border-left:4px solid #3b82f6;border-radius:12px}
+.sales-focus p{color:#506482}.sales-focus h2{color:#1e3a66}
+.profit-summary>div{background:#f8fafd;border-color:#dce4ef}.profit-summary span{color:#58677e}.profit-summary strong{color:#17243b}.profit-summary>div:last-of-type strong{color:#148354}
+#sale-checkout-fields{background:#f4f8ff;border:1px solid #d6e3f7}#sale-checkout-fields h3{color:#2458a4}
+.sale-total{background:#fff;color:#33445e;border-color:#dce4ef}.sale-total strong{color:#17243b}
+.sale-item,.ledger-card{background:#fff;border-color:#dce4ef;color:#33445e}
+.ledger-balance{background:#eaf8f1;color:#146c48;border-color:#bce3ce}
+#payment-form{border-color:#dce4ef}
+.shortcuts-list dt{color:#2563eb}
+#notice,#commerce-notice{background:#edf9f2;color:#176841;border-radius:7px}
+#notice:empty,#commerce-notice:empty{display:none}
+#notice.error,.commerce-error,#form-error,#stock-error,#sale-error,#payment-error,#login-message,.cash-status{background:transparent;color:#b42332}
+#notice.error{background:#fff1f2}.cash-warning{background:#fffaeb;color:#8b5c0d;border:1px solid #f2dc9b;border-radius:8px}
+.cash-status{font-size:13px;margin-top:16px}.cash-status:empty{display:none}
+.status-active{color:#15804f}.status-inactive,.negative-profit{color:#b45309}
+.access-stars{display:none}.access-page{background:#f3f6fb}
+.access-layout{gap:80px}.access-card{padding:34px 28px;box-shadow:0 16px 45px #1f3b6414}
+.access-logo{background:#e8f0ff;color:#2563eb;border:1px solid #cdddff;border-radius:12px}
+.access-benefits li{background:#fff;border:1px solid #dce4ef;box-shadow:0 3px 12px #1f3b6406}
+.benefit-icon{background:#eaf1ff;color:#2563eb}
+.access-tabs{background:#edf2fa;border:1px solid #dce4ef}
+.access-tabs button{background:transparent;color:#58677e;box-shadow:none;border:0}
+.access-tabs button.selected{background:#fff;color:#1d4ed8;box-shadow:0 2px 7px #17243b12}
+.access-password button,.access-forgot{background:transparent;color:#506482;border:0;box-shadow:none}
+.access-password button:hover,.access-forgot:hover{background:#edf4ff;color:#2563eb}
+.access-intro-note,.access-footer{color:#65758c}
+@media(max-width:650px){main{padding:18px}.cash-stat strong{font-size:19px}.access-layout{gap:32px}.catalog{border-radius:10px}tbody tr{border-color:#dce4ef}td:before,.products-row td:before{color:#65758c}}
+@media print{html,body,.cash-report,.cash-stat{background:#fff!important;box-shadow:none!important}.cash-stat{border-color:#d5dbe4!important}.cash-report table th,.cash-report table td{background:#fff!important;color:#17243b}}

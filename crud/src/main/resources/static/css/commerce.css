@@ -1,0 +1,148 @@
+/* Cadastros comerciais, vendas e extratos do Stockify. */
+body:not(.access-page) aside {
+    overflow-y: auto;
+}
+body:not(.access-page) .nav-label {
+    margin-top: 28px;
+}
+#commerce-notice {
+    padding: 0 24px;
+    font-size: 14px;
+}
+.commerce-error {
+    color: #f4a4ad;
+    font-size: 14px;
+}
+.commerce-empty {
+    padding: 24px;
+    color: #94a39b;
+}
+#commerce-table td {
+    white-space: normal;
+    vertical-align: top;
+}
+#commerce-table td:nth-child(3) {
+    max-width: 360px;
+    white-space: pre-line;
+}
+#contact-editor,
+#sale-editor,
+#ledger-dialog {
+    width: min(720px, calc(100vw - 32px));
+}
+#contact-editor form,
+#sale-editor form,
+#ledger-dialog {
+    padding: 28px;
+}
+#contact-editor form,
+#sale-editor form {
+    margin: 0;
+}
+#ledger-dialog h3 {
+    margin: 24px 0 10px;
+    font-size: 15px;
+}
+#ledger-dialog p {
+    font-size: 14px;
+    line-height: 1.7;
+    overflow-wrap: anywhere;
+}
+.ledger-note {
+    white-space: pre-wrap;
+}
+.ledger-balance {
+    padding: 15px;
+    background: #092619;
+    border: 1px solid #15422b;
+    border-radius: 8px;
+    color: #95efb4;
+}
+.ledger-card {
+    border: 1px solid #24362b;
+    padding: 16px;
+    border-radius: 8px;
+    margin-top: 12px;
+}
+.sale-items-title {
+    margin: 24px 0 12px;
+    font-size: 15px;
+}
+.sale-item {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 85px auto;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 12px;
+}
+.sale-item select,
+.sale-item input {
+    margin: 0;
+    min-width: 0;
+}
+.sale-total {
+    display: flex;
+    justify-content: space-between;
+    padding: 18px 0;
+    border-bottom: 1px solid #24362b;
+}
+#payment-form {
+    border-top: 1px solid #24362b;
+    margin-top: 24px;
+}
+@media (max-width: 700px) {
+    #commerce-panel .toolbar {
+        align-items: stretch;
+        flex-direction: column;
+    }
+    #commerce-panel .filters {
+        flex-wrap: wrap;
+    }
+    #commerce-panel .filters input {
+        width: 100%;
+    }
+    #commerce-table thead {
+        display: none;
+    }
+    #commerce-table,
+    #commerce-table tbody,
+    #commerce-table tr,
+    #commerce-table td {
+        display: block;
+        width: 100%;
+    }
+    #commerce-table tr {
+        border-bottom: 1px solid #24362b;
+        padding: 16px;
+    }
+    #commerce-table td,
+    #commerce-table td:first-child,
+    #commerce-table td:nth-child(3) {
+        display: block;
+        max-width: none;
+        padding: 8px 0;
+        border: 0;
+        font-size: 14px;
+    }
+    #commerce-table td::before {
+        content: attr(data-label);
+        display: block;
+        font-size: 11px;
+        color: #86958c;
+        margin-bottom: 5px;
+    }
+    #commerce-table .actions::before {
+        display: none;
+    }
+    .sale-item {
+        grid-template-columns: 1fr 80px;
+    }
+    .sale-item button {
+        grid-column: 1 / -1;
+    }
+    #contact-editor form,
+    #sale-editor form,
+    #ledger-dialog {
+        padding: 20px;
+    }
+}

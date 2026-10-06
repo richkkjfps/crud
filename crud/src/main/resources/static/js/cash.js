@@ -1,0 +1,51 @@
+'use strict';
+window.StockifyCash = (() => {
+    let current = null, pending = false, ready = false;
+    const el = id => document.getElementById(id);
+    const names = {CASH:'Dinheiro',PIX:'Pix',DEBIT:'Débito',CARD:'Crédito'};
+    const money = value => currency.format(Number(value || 0));
+    const time = value => value ? new Date(value).toLocaleString('pt-BR',{timeZone:'America/Sao_Paulo'}) : 'Em aberto';
+    function node(tag,text,cls){const n=document.createElement(tag);if(text!=null)n.textContent=text;if(cls)n.className=cls;return n;}
+    function action(text,fn,secondary=false){const n=node('button',text,secondary?'secondary':'');n.type='button';n.disabled=pending;n.addEventListener('click',fn);return n;}
+    function card(title,value){const n=node('div',null,'cash-stat');n.append(node('span',title),node('strong',value));return n;}
+    async function reload(){if(!me)return;current=(await api('/api/cash/current')).session;ready=true;render();if(!current && document.getElementById('sales-focus') && !document.getElementById('commerce-panel').hidden && !document.getElementById('sales-focus').hidden)document.querySelector('[data-view="products"]').click();}
+    function render(){
+        const panel=el('cash-dashboard');panel.replaceChildren();
+        const top=node('div',null,'cash-top'), heading=node('div');
+        heading.append(node('p','ROTINA DA LOJA','eyebrow'),node('h2',current?'Meu caixa está aberto':'Estoque disponível · caixa fechado'),node('p',current?`${current.operator_name} · aberto em ${time(current.opened_at)}`:'Use o estoque e os cadastros livremente. Abra seu caixa quando quiser vender ou receber pagamentos.','subtitle'));
+        const actions=node('div',null,'cash-actions');
+        if(current){actions.append(action('Entrada / saída',movement,true),action('Ver relatório',()=>report(current)),action('Fechar caixa',close,true));}
+        else actions.append(action('Abrir meu caixa',open));
+        top.append(heading,actions);panel.append(top);
+        const status = node('p',null,'cash-status');status.id='cash-status';status.setAttribute('role','status');status.setAttribute('aria-live','polite');panel.append(status);
+        if(current){const stats=node('div',null,'cash-stats');stats.append(card('Vendas do expediente',money(current.revenue)),card('Recebido · todas as formas',money(current.received)),card('Dinheiro esperado',money(current.expected_cash)),card('Lucro bruto'+(Number(current.unknown_cost_items)?' · parcial':''),money(current.gross_profit)));panel.append(stats);}
+    }
+    function dialog(title){el('cash-dialog-title').textContent=title;el('cash-dialog-content').replaceChildren();if(!el('cash-dialog').open)el('cash-dialog').showModal();return el('cash-dialog-content');}
+    function field(form,label,id,type='text',required=true){const l=node('label',label);l.htmlFor=id;const input=node('input');input.id=id;input.type=type;input.required=required;if(type==='number'){input.min='0';input.step='0.01';input.max='999999999999.99';}form.append(l,input);return input;}
+    function form(title,submit){const content=dialog(title),f=node('form'),error=node('p',null,'commerce-error'),save=node('button','Confirmar');save.type='submit';f.addEventListener('submit',async event=>{event.preventDefault();if(pending)return;pending=true;save.disabled=true;el('cash-dialog-close').disabled=true;error.textContent='';try{await submit();}catch(e){error.textContent=e.message;}finally{pending=false;save.disabled=false;el('cash-dialog-close').disabled=false;render();}});content.append(f);return {f,error,save,end(){f.append(error,save);}};}
+    function open(){const requestId=crypto.randomUUID();const x=form('Abrir meu caixa',async()=>{await api('/api/cash/open',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({amount:Number(amount.value),requestId})});el('cash-dialog').close();await reload();notice('Seu caixa está aberto. Bom trabalho!');});x.f.append(node('p','Informe o dinheiro disponível para troco no início do expediente.'));const amount=field(x.f,'Saldo inicial em dinheiro (R$)','cash-opening','number');amount.value='0';x.end();amount.focus();}
+    function movement(){const requestId=crypto.randomUUID();const x=form('Movimentar dinheiro',async()=>{await api('/api/cash/movements',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({kind:kind.value,amount:Number(amount.value),reason:reason.value,requestId})});el('cash-dialog').close();await reload();});const kind=node('select');for(const [v,t]of [['IN','Entrada de dinheiro'],['OUT','Saída / sangria']]){const o=node('option',t);o.value=v;kind.append(o);}x.f.append(node('label','Tipo de movimentação'),kind);const amount=field(x.f,'Valor (R$)','cash-movement-amount','number');amount.min='0.01';const reason=field(x.f,'Motivo','cash-movement-reason');reason.maxLength=500;x.end();}
+    async function close(){try{await reload();if(!current)return;const id=current.id;const x=form('Conferir e fechar meu caixa',async()=>{const result=await api(`/api/cash/${id}/close`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({countedAmount:Number(counted.value),notes:notes.value})});await reload();report(result);});x.f.append(node('p',`Dinheiro esperado: ${money(current.expected_cash)}. Conte apenas notas e moedas; Pix e cartões já estão separados.`));const counted=field(x.f,'Dinheiro contado (R$)','cash-counted','number');const difference=node('p');counted.addEventListener('input',()=>difference.textContent='Diferença: '+money(Number(counted.value)-Number(current.expected_cash)));x.f.append(difference);const notes=field(x.f,'Observação do fechamento','cash-close-notes','text',false);notes.maxLength=1000;x.end();}catch(e){notice(e.message,true);}}
+    function table(parent,head,rows){const wrap=node('div',null,'table-wrap'),t=node('table'),thead=node('thead'),tr=node('tr');head.forEach(h=>tr.append(node('th',h)));thead.append(tr);t.append(thead);const body=node('tbody');for(const row of rows){const r=node('tr');row.forEach(c=>r.append(node('td',c)));body.append(r);}if(!rows.length){const r=node('tr'),td=node('td','Nenhum registro neste expediente.');td.colSpan=head.length;r.append(td);body.append(r);}t.append(body);wrap.append(t);parent.append(wrap);}
+    function report(data){
+        const content=dialog(data.closed_at?'Relatório de fechamento':'Relatório do caixa aberto');
+        const sheet=node('article',null,'cash-report');content.append(sheet);
+        sheet.append(node('h2',`Stockify · Caixa #${data.id}`),node('p',`${me.companyName || 'Minha loja'} · ${data.operator_name}`),node('p',`Abertura: ${time(data.opened_at)} · Fechamento: ${time(data.closed_at)}`));
+        const stats=node('div',null,'cash-stats');
+        for(const [label,value]of [['Saldo inicial',data.opening_amount],['Vendas',data.revenue],['Recebimentos',data.received],['Custo conhecido das vendas',data.known_cost],['Lucro bruto',data.gross_profit],['Entradas de dinheiro',data.cash_in],['Saídas de dinheiro',data.cash_out],['Dinheiro esperado',data.expected_cash]])stats.append(card(label,money(value)));
+        if(data.closed_at)stats.append(card('Dinheiro contado',money(data.counted_amount)),card('Diferença (contado − esperado)',money(data.difference)));
+        sheet.append(stats,node('p',`${data.sales_count} venda(s). Lucro bruto = venda menos custo dos produtos. Despesas e impostos não são descontados. Recebimentos podem incluir fiados de outros dias.`));
+        if(Number(data.unknown_cost_items))sheet.append(node('p',`Lucro parcial: ${data.unknown_cost_items} item(ns) sem custo cadastrado.`,'cash-warning'));
+        sheet.append(node('h3','Recebimentos por forma de pagamento'));table(sheet,['Forma','Valor'],Object.entries(names).map(([k,v])=>[v,money(data.payments.find(p=>p.payment_method===k)?.amount)]));
+        sheet.append(node('h3','Vendas deste caixa'));table(sheet,['Venda','Horário','Tipo','Total'],data.sales.map(s=>['#'+s.id,time(s.created_at),s.payment_type==='CREDIT'?'Fiado / a prazo':'À vista',money(s.total)]));
+        sheet.append(node('h3','Entradas e saídas de dinheiro'));table(sheet,['Horário','Tipo','Motivo','Valor'],data.movements.map(m=>[time(m.created_at),m.kind==='IN'?'Entrada':'Saída',m.reason,money(m.amount)]));
+        sheet.append(node('h3','Mercadorias recebidas'));table(sheet,['Horário','Produto','Quantidade'],data.restocks.map(r=>[time(r.created_at),r.name,r.quantity]));
+        if(data.notes)sheet.append(node('p','Observação: '+data.notes));
+        const print = action('Imprimir / salvar PDF',()=>window.print(),true);
+        print.disabled = false;
+        content.append(print);
+    }
+    async function history(){try{const rows=await api('/api/cash');const content=dialog('Histórico de caixas');content.append(node('p',me.role==='USER'?'Seus últimos 100 caixas.':'Últimos 100 caixas da empresa.'));for(const r of rows){const row=node('div',null,'cash-history-row');row.append(node('span',`#${r.id} · ${r.operator_name} · ${time(r.opened_at)} · ${r.closed_at?'Fechado':'Aberto'}`),action('Ver relatório',async()=>{try{report(await api('/api/cash/'+r.id));}catch(e){notice(e.message,true);}},true));content.append(row);}if(!rows.length)content.append(node('p','Nenhum caixa registrado.'));}catch(e){notice(e.message,true);}}
+    el('cash-dialog-close').addEventListener('click',()=>{if(!pending)el('cash-dialog').close();});el('cash-dialog').addEventListener('cancel',e=>{if(pending)e.preventDefault();});el('cash-history-button').addEventListener('click',history);
+    return {init:reload,reload,ensureOpen(){if(!ready||!current){notice('Abra seu caixa antes de continuar.',true);if(el('cash-status'))el('cash-status').textContent='Para acessar vendas ou registrar recebimentos, clique em Abrir meu caixa.';el('cash-dashboard').scrollIntoView({behavior:'smooth'});return false;}return true;}};
+})();

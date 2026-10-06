@@ -1,0 +1,253 @@
+:root {
+    --accent: #20ed85;
+    --surface: #111c18;
+    --muted: #9aaea3;
+}
+body:not(.access-page) {
+    color-scheme: dark;
+    background: radial-gradient(ellipse at 70% 0, #142a21 0, #0a110e 50%);
+}
+body:not(.access-page) aside {
+    background: #0c1510;
+    padding: 28px 18px;
+    overflow: hidden;
+}
+body:not(.access-page) aside nav {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #355040 #0c1510;
+}
+.nav {
+    padding: 11px 12px;
+    margin-top: 5px;
+}
+body:not(.access-page) .aside-footer {
+    flex-shrink: 0;
+    margin-top: 18px;
+}
+.sale-launch,
+aside .brand,
+aside .nav-label {
+    flex-shrink: 0;
+}
+.sale-launch {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 28px;
+    background: var(--accent);
+    color: #052914;
+    padding: 16px;
+    box-shadow: 0 5px 30px #20ed8518;
+}
+kbd {
+    display: inline-block;
+    padding: 3px 6px;
+    border: 1px solid currentColor;
+    border-radius: 5px;
+    font-size: 10px;
+    font-family: inherit;
+    opacity: 0.8;
+}
+.sales-nav {
+    border-left: 3px solid var(--accent);
+}
+.nav kbd {
+    margin-left: auto;
+}
+.platform-label {
+    margin: 25px 12px 5px;
+    color: #728b7d;
+    font-size: 9px;
+    letter-spacing: 1.5px;
+}
+.sales-focus {
+    margin: 0 24px 24px;
+    padding: 28px;
+    border-radius: 16px;
+    border: 1px solid #315941;
+    background: linear-gradient(120deg, #153d28, #13261d);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+}
+.sales-focus h2 {
+    font-size: 28px;
+    margin-top: 8px;
+    letter-spacing: -0.8px;
+}
+.sales-focus p {
+    color: #b1c5b8;
+    max-width: 540px;
+    font-size: 14px;
+    line-height: 1.6;
+}
+.sales-focus button {
+    background: var(--accent);
+    color: #052914;
+    padding: 18px 22px;
+    white-space: nowrap;
+}
+.profit-summary {
+    margin: 0 24px 24px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+}
+.profit-summary > div {
+    padding: 20px;
+    border: 1px solid #2b4034;
+    background: var(--surface);
+    border-radius: 12px;
+}
+.profit-summary span {
+    color: var(--muted);
+    font-size: 12px;
+}
+.profit-summary strong {
+    display: block;
+    font-size: 24px;
+    margin-top: 10px;
+}
+.profit-summary > div:last-of-type strong {
+    color: var(--accent);
+}
+.profit-summary p {
+    grid-column: 1/-1;
+    margin: 0;
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.6;
+}
+.product-picker {
+    position: relative;
+    min-width: 0;
+}
+.product-selected {
+    display: block;
+    font-size: 11px;
+    color: #9cb5a6;
+    margin-top: 8px;
+}
+.product-results {
+    display: grid;
+    gap: 5px;
+    max-height: 220px;
+    overflow: auto;
+    margin-top: 8px;
+}
+.product-results:empty {
+    display: none;
+}
+.product-results button {
+    text-align: left;
+    font-size: 12px;
+    white-space: normal;
+    border-color: #355342;
+}
+.product-results p {
+    font-size: 12px;
+    color: var(--muted);
+}
+.sale-item {
+    align-items: start;
+}
+.sale-item > input {
+    margin: 0;
+}
+#sale-editor {
+    width: min(850px, calc(100vw - 32px));
+}
+.checkout-bar {
+    margin: 22px 0;
+}
+#sale-checkout {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px;
+}
+#sale-checkout-fields {
+    padding: 22px;
+    background: #102b1c;
+    border: 1px solid #2b5139;
+    border-radius: 12px;
+    margin: 20px 0;
+}
+#sale-checkout-fields h3 {
+    margin-top: 0;
+    color: #9af0b8;
+}
+.negative-profit {
+    color: #f4a4ad;
+}
+.shortcut-help {
+    position: fixed;
+    right: 24px;
+    bottom: 18px;
+    background: #18281f;
+    color: #c0d7c8;
+    border: 1px solid #3a5142;
+    font-size: 12px;
+    padding: 9px 12px;
+    z-index: 3;
+}
+#stock-editor,
+#shortcuts-dialog {
+    width: min(630px, calc(100vw - 32px));
+    padding: 26px;
+}
+.shortcuts-list {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: 16px;
+    font-size: 14px;
+}
+.shortcuts-list dt {
+    color: var(--accent);
+    font-weight: 700;
+}
+.shortcuts-list dd {
+    margin: 0;
+}
+@media (max-width: 760px) {
+    body:not(.access-page) aside {
+        overflow: visible;
+    }
+    body:not(.access-page) aside nav {
+        overflow: visible;
+    }
+    .platform-label {
+        grid-column: 1 / -1;
+    }
+    .sales-focus {
+        padding: 20px;
+        flex-direction: column;
+        align-items: stretch;
+        margin: 0 16px 20px;
+    }
+    .sales-focus h2 {
+        font-size: 24px;
+    }
+    .profit-summary {
+        grid-template-columns: 1fr;
+        margin: 0 16px 24px;
+    }
+    .profit-summary strong {
+        font-size: 22px;
+    }
+    .shortcut-help {
+        right: 12px;
+        bottom: 10px;
+    }
+    .sale-launch {
+        margin-top: 18px;
+    }
+    #sale-checkout-fields {
+        padding: 16px;
+    }
+}

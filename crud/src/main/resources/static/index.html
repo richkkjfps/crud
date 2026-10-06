@@ -1,0 +1,569 @@
+<!doctype html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <title>Stockify | Gestão</title>
+        <link rel="stylesheet" href="/css/style.css" />
+        <link rel="stylesheet" href="/css/commerce.css" />
+        <link rel="stylesheet" href="/css/operations.css" />
+        <script src="/js/app.js" defer></script>
+        <script src="/js/commerce.js" defer></script>
+        <script src="/js/operations.js" defer></script>
+        <script src="/js/cash.js" defer></script>
+        <link rel="stylesheet" href="/css/cash.css" />
+        <link rel="stylesheet" href="/css/light.css?v=2" />
+    </head>
+    <body>
+        <aside>
+            <a class="brand" href="/">
+                ◈
+                <span>Stockify</span>
+            </a>
+            <button type="button" class="sale-launch" id="quick-sale">
+                + Nova venda
+                <kbd>F1</kbd>
+            </button>
+            <p class="nav-label">SUA LOJA</p>
+            <nav aria-label="Menu principal">
+<button class="nav" id="cash-history-button">◷ Fechamentos de caixa</button>
+                <button class="nav active" data-view="products">▦ Produtos</button>
+                <button class="nav" data-commerce="customers">♙ Clientes</button>
+                <button class="nav sales-nav" data-commerce="sales">
+                    ▤ Vendas
+                    <kbd>F1</kbd>
+                </button>
+                <button class="nav" data-commerce="receivables">◷ Contas a receber</button>
+                <button class="nav" data-commerce="suppliers">▣ Fornecedores</button>
+                <button class="nav" data-view="categories" data-admin hidden>◇ Categorias</button>
+                <button class="nav" data-view="users" data-admin hidden>♙ Usuários</button>
+                <p class="platform-label" data-owner hidden>ADMINISTRAÇÃO STOCKIFY</p>
+                <button class="nav" data-view="clients" data-owner hidden>
+                    ▣ Empresas contratantes
+                </button>
+            </nav>
+            <div class="aside-footer">
+                <span class="account-avatar" id="avatar">…</span>
+                <div>
+                    <strong id="account-name">Carregando…</strong>
+                    <p id="account-role"></p>
+                </div>
+                <button id="logout" class="secondary" type="button">Sair</button>
+            </div>
+        </aside>
+        <main>
+<section id="cash-dashboard" class="cash-dashboard" aria-label="Meu caixa"></section>
+            <header>
+                <div>
+                    <p class="eyebrow" id="company-label">Stockify</p>
+                    <h1 id="page-title">Produtos</h1>
+                    <p class="subtitle" id="page-description">
+                        Cadastre qualquer produto, organize o estoque e encontre pelo código de
+                        barras.
+                    </p>
+                </div>
+                <button id="new-entry" disabled>+ Novo produto</button>
+            </header>
+            <section class="catalog" id="catalog-panel">
+                <div class="toolbar">
+                    <div>
+                        <h2 id="list-title">Todos os produtos</h2>
+                        <p id="list-description">Seu catálogo, sempre à mão.</p>
+                    </div>
+                    <div class="filters">
+                        <input
+                            id="search"
+                            type="search"
+                            aria-label="Pesquisar registros"
+                            placeholder="Pesquisar…"
+                        />
+                        <button class="secondary" id="refresh" disabled>Atualizar</button>
+                    </div>
+                </div>
+                <div class="catalog-filters" id="product-filters">
+                    <select id="category-filter" aria-label="Filtrar por categoria">
+                        <option value="">Todas as categorias</option>
+                    </select>
+                    <button id="scan-product" class="secondary" type="button">
+                        ▥ Cadastrar por código
+                    </button>
+                </div>
+                <p id="notice" role="status" aria-live="polite"></p>
+                <div class="table-wrap">
+                    <table>
+                        <thead id="table-head"></thead>
+                        <tbody id="entries"></tbody>
+                    </table>
+                </div>
+                <div id="empty" hidden></div>
+                <footer id="count"></footer>
+            </section>
+            <section class="catalog" id="commerce-panel" hidden>
+                <div class="toolbar">
+                    <div>
+                        <h2 id="commerce-title"></h2>
+                        <p id="commerce-description"></p>
+                    </div>
+                    <div class="filters">
+                        <input
+                            id="commerce-search"
+                            type="search"
+                            aria-label="Pesquisar clientes, vendas ou fornecedores"
+                            placeholder="Pesquisar…"
+                        />
+                        <button id="commerce-refresh" class="secondary" type="button">
+                            Atualizar
+                        </button>
+                        <button id="commerce-new" type="button"></button>
+                    </div>
+                </div>
+                <section id="sales-focus" class="sales-focus" hidden>
+                    <div>
+                        <span class="eyebrow">CAIXA DA LOJA</span>
+                        <h2>Venda com agilidade.</h2>
+                        <p>
+                            Pesquise o produto, informe a quantidade e pressione F6 para escolher o
+                            pagamento.
+                        </p>
+                    </div>
+                    <button type="button" id="sales-focus-new">
+                        Iniciar venda
+                        <kbd>F1</kbd>
+                    </button>
+                </section>
+                <section id="profit-summary" class="profit-summary" hidden>
+                    <div>
+                        <span>Vendas registradas</span>
+                        <strong id="profit-revenue"></strong>
+                    </div>
+                    <div>
+                        <span>Custos conhecidos</span>
+                        <strong id="profit-cost"></strong>
+                    </div>
+                    <div>
+                        <span>Lucro bruto conhecido</span>
+                        <strong id="profit-gross"></strong>
+                    </div>
+                    <p id="profit-warning"></p>
+                </section>
+                <p id="commerce-notice" role="status" aria-live="polite"></p>
+                <div class="table-wrap">
+                    <table id="commerce-table">
+                        <thead id="commerce-head"></thead>
+                        <tbody id="commerce-rows"></tbody>
+                    </table>
+                </div>
+                <p id="commerce-empty" class="commerce-empty" hidden>Nenhum registro encontrado.</p>
+                <footer id="commerce-count"></footer>
+            </section>
+        </main>
+        <dialog id="editor">
+            <form id="entry-form">
+                <div class="dialog-header">
+                    <div>
+                        <p class="eyebrow">CADASTRO</p>
+                        <h2 id="form-title"></h2>
+                    </div>
+                    <button class="icon secondary" type="button" data-close aria-label="Fechar">
+                        ×
+                    </button>
+                </div>
+                <div id="common-fields">
+                    <label for="name" id="name-label">Nome</label>
+                    <input id="name" required maxlength="255" autocomplete="off" />
+                </div>
+                <fieldset id="product-fields" hidden>
+                    <label for="barcode">Código de barras</label>
+                    <input
+                        id="barcode"
+                        type="text"
+                        maxlength="100"
+                        autocomplete="off"
+                        placeholder="Digite ou use um leitor USB"
+                    />
+                    <p class="field-help" id="barcode-help" role="status">
+                        Use o leitor ou digite o código e pressione Enter para consultar.
+                    </p>
+                    <div class="field-grid">
+                        <div>
+                            <label for="sku">Referência interna (SKU)</label>
+                            <input id="sku" maxlength="100" placeholder="Ex.: CEL-001" />
+                        </div>
+                        <div>
+                            <label for="model">Modelo</label>
+                            <input
+                                id="model"
+                                maxlength="150"
+                                placeholder="Ex.: notebook 15 polegadas"
+                            />
+                        </div>
+                    </div>
+                    <div id="cost-field" data-admin hidden>
+                        <label for="cost-price">Custo por unidade (R$)</label>
+                        <input
+                            id="cost-price"
+                            type="number"
+                            min="0"
+                            max="999999999999.99"
+                            step="0.01"
+                            inputmode="decimal"
+                        />
+                        <p id="product-profit" class="field-help">
+                            Informe custo e venda para acompanhar o lucro bruto por unidade.
+                        </p>
+                    </div>
+                    <label for="description">Descrição / especificações</label>
+                    <textarea
+                        id="description"
+                        maxlength="2000"
+                        rows="3"
+                        placeholder="Características, cor, tamanho, capacidade ou outras informações"
+                    ></textarea>
+                    <div class="field-grid">
+                        <div>
+                            <label for="price">Preço de venda (R$)</label>
+                            <input
+                                id="price"
+                                type="number"
+                                min="0"
+                                max="999999999999.99"
+                                step="0.01"
+                                inputmode="decimal"
+                            />
+                        </div>
+                        <div>
+                            <label for="quantity">Quantidade (unidades)</label>
+                            <input
+                                id="quantity"
+                                type="number"
+                                min="0"
+                                max="2147483647"
+                                step="1"
+                                value="0"
+                            />
+                        </div>
+                    </div>
+                    <div class="field-grid">
+                        <div>
+                            <label for="category">Categoria</label>
+                            <select id="category"></select>
+                        </div>
+                        <div>
+                            <label for="brand">Marca</label>
+                            <input
+                                id="brand-name"
+                                maxlength="150"
+                                placeholder="Ex.: Samsung, Apple, Dell…"
+                            />
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset id="user-fields" hidden>
+                    <label for="email">E-mail de acesso</label>
+                    <input id="email" type="email" maxlength="255" autocomplete="off" />
+                    <label for="password">Senha</label>
+                    <input
+                        id="password"
+                        type="password"
+                        minlength="8"
+                        autocomplete="new-password"
+                    />
+                    <p class="field-help" id="password-help"></p>
+                    <div class="field-grid">
+                        <div>
+                            <label for="role">Perfil</label>
+                            <select id="role">
+                                <option value="USER">Funcionário</option>
+                                <option value="ADMIN">Proprietário da loja</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="active">Acesso</label>
+                            <select id="active">
+                                <option value="true">Ativo</option>
+                                <option value="false">Desativado</option>
+                            </select>
+                        </div>
+                    </div>
+                    <p class="field-help">
+                        O proprietário da loja tem acesso completo à sua empresa. Funcionários
+                        gerenciam seus produtos.
+                    </p>
+                </fieldset>
+                <fieldset id="client-fields" hidden>
+                    <label for="client-slug">Código da empresa</label>
+                    <input
+                        id="client-slug"
+                        maxlength="40"
+                        pattern="[a-z0-9][a-z0-9-]{2,39}"
+                        placeholder="Ex.: loja-do-joao"
+                        autocomplete="off"
+                    />
+                    <p class="field-help">Este código será utilizado no login do cliente.</p>
+                    <label for="client-active">Painel</label>
+                    <select id="client-active">
+                        <option value="true">Ativo</option>
+                        <option value="false">Desativado</option>
+                    </select>
+                    <fieldset id="initial-admin-fields">
+                        <label for="client-admin-name">Nome do administrador</label>
+                        <input id="client-admin-name" maxlength="100" autocomplete="off" />
+                        <label for="client-admin-email">E-mail do administrador</label>
+                        <input
+                            id="client-admin-email"
+                            type="email"
+                            maxlength="255"
+                            autocomplete="off"
+                        />
+                        <label for="client-admin-password">Senha inicial</label>
+                        <input
+                            id="client-admin-password"
+                            type="password"
+                            minlength="8"
+                            autocomplete="new-password"
+                        />
+                        <p class="field-help">
+                            Este acesso poderá gerenciar somente os usuários e os dados da empresa
+                            criada.
+                        </p>
+                    </fieldset>
+                </fieldset>
+                <p id="form-error" role="alert"></p>
+                <div class="form-actions">
+                    <button class="secondary" type="button" data-close>Cancelar</button>
+                    <button id="save" type="submit">Salvar</button>
+                </div>
+            </form>
+        </dialog>
+        <dialog id="contact-editor">
+            <form id="contact-form">
+                <div class="dialog-header">
+                    <h2 id="contact-title">Cadastrar cliente</h2>
+                    <button
+                        type="button"
+                        class="icon secondary"
+                        data-commerce-close="contact-editor"
+                        aria-label="Fechar cadastro"
+                    >
+                        ×
+                    </button>
+                </div>
+                <label for="contact-name">Nome</label>
+                <input id="contact-name" required maxlength="150" />
+                <div class="field-grid">
+                    <div>
+                        <label for="contact-phone">Telefone</label>
+                        <input id="contact-phone" type="tel" maxlength="40" />
+                    </div>
+                    <div>
+                        <label for="contact-email">E-mail</label>
+                        <input id="contact-email" type="email" maxlength="255" />
+                    </div>
+                </div>
+                <label for="contact-address">Endereço</label>
+                <textarea id="contact-address" maxlength="500" rows="2"></textarea>
+                <div id="supplier-fields" hidden>
+                    <label for="contact-supplied">O que fornece</label>
+                    <textarea
+                        id="contact-supplied"
+                        maxlength="5000"
+                        rows="5"
+                        placeholder="Ex.: arroz, feijão e óleo. Entregas às terças-feiras."
+                    ></textarea>
+                    <p class="field-help">
+                        Anote produtos, serviços, condições de entrega ou outras informações do
+                        fornecedor.
+                    </p>
+                </div>
+                <label for="contact-notes">Observações</label>
+                <textarea id="contact-notes" maxlength="3000" rows="3"></textarea>
+                <p id="contact-error" role="alert" class="commerce-error"></p>
+                <div class="form-actions">
+                    <button class="secondary" type="button" data-commerce-close="contact-editor">
+                        Cancelar
+                    </button>
+                    <button id="contact-save" type="submit">Salvar</button>
+                </div>
+            </form>
+        </dialog>
+        <dialog id="sale-editor">
+            <form id="sale-form">
+                <div class="dialog-header">
+                    <h2>Registrar venda</h2>
+                    <button
+                        type="button"
+                        class="icon secondary"
+                        data-commerce-close="sale-editor"
+                        aria-label="Fechar venda"
+                    >
+                        ×
+                    </button>
+                </div>
+                <h3 class="sale-items-title">Produtos da venda</h3>
+                <div id="sale-items"></div>
+                <button id="sale-add-item" class="secondary" type="button">
+                    + Adicionar produto
+                </button>
+                <p class="sale-total">
+                    Total
+                    <strong id="sale-total">R$ 0,00</strong>
+                </p>
+                <p class="field-help">
+                    O estoque será baixado ao registrar. Os preços do cadastro são confirmados pelo
+                    servidor.
+                </p>
+                <div class="checkout-bar">
+                    <button type="button" id="sale-checkout">
+                        Escolher pagamento
+                        <kbd>F6 / Enter</kbd>
+                    </button>
+                </div>
+                <section id="sale-checkout-fields" hidden>
+                    <h3>Pagamento da venda</h3>
+                    <label for="sale-customer">Cliente</label>
+                    <select id="sale-customer"></select>
+                    <div class="field-grid">
+                        <div>
+                            <label for="sale-type">Forma de pagamento</label>
+                            <select id="sale-type">
+                                <option value="CASH">À vista</option>
+                                <option value="CREDIT">Fiado / a prazo</option>
+                            </select>
+                        </div>
+                        <div id="sale-due-field" hidden>
+                            <label for="sale-due">Vencimento (opcional)</label>
+                            <input id="sale-due" type="date" />
+                        </div>
+                    </div>
+                    <div id="sale-initial-field" hidden>
+                        <label for="sale-initial">Entrada recebida</label>
+                        <input id="sale-initial" type="number" min="0" step="0.01" value="0" />
+                    </div>
+                    <label for="sale-method">Recebimento / entrada</label><select id="sale-method"><option value="CASH">Dinheiro</option><option value="PIX">Pix</option><option value="DEBIT">Cartão de débito</option><option value="CARD">Cartão de crédito</option></select>
+                    <label for="sale-notes">Observações</label>
+                    <textarea id="sale-notes" maxlength="3000" rows="2"></textarea>
+                </section>
+                <p id="sale-error" role="alert" class="commerce-error"></p>
+                <div class="form-actions">
+                    <button class="secondary" type="button" data-commerce-close="sale-editor">
+                        Cancelar
+                    </button>
+                    <button id="sale-save" type="submit" hidden>Confirmar venda · F8</button>
+                </div>
+            </form>
+        </dialog>
+        <dialog id="ledger-dialog">
+            <div class="dialog-header">
+                <h2 id="ledger-title">Extrato</h2>
+                <button
+                    class="icon secondary"
+                    type="button"
+                    data-commerce-close="ledger-dialog"
+                    aria-label="Fechar extrato"
+                >
+                    ×
+                </button>
+            </div>
+            <div id="ledger-content"></div>
+            <form id="payment-form" hidden>
+                <h3>Registrar pagamento</h3>
+                <label for="payment-amount">Valor recebido</label>
+                <input id="payment-amount" type="number" min="0.01" step="0.01" required />
+                <label for="payment-method">Forma de recebimento</label><select id="payment-method"><option value="CASH">Dinheiro</option><option value="PIX">Pix</option><option value="DEBIT">Cartão de débito</option><option value="CARD">Cartão de crédito</option></select>
+                <label for="payment-notes">Observação</label>
+                <input id="payment-notes" maxlength="1000" placeholder="Ex.: recebido por Pix" />
+                <p id="payment-error" role="alert" class="commerce-error"></p>
+                <div class="form-actions">
+                    <button id="payment-save" type="submit">Registrar pagamento</button>
+                </div>
+            </form>
+        </dialog>
+        <dialog id="stock-editor">
+            <form id="stock-form">
+                <div class="dialog-header">
+                    <h2>Repor estoque</h2>
+                    <button
+                        class="icon secondary"
+                        type="button"
+                        id="stock-close"
+                        aria-label="Fechar reposição"
+                    >
+                        ×
+                    </button>
+                </div>
+                <p id="stock-product"></p>
+                <label for="stock-quantity">Quantidade recebida</label>
+                <input
+                    id="stock-quantity"
+                    type="number"
+                    min="1"
+                    max="2147483647"
+                    step="1"
+                    required
+                />
+                <div class="field-grid">
+                    <div>
+                        <label for="stock-cost">Novo custo por unidade (R$)</label>
+                        <input id="stock-cost" type="number" min="0" step="0.01" required />
+                    </div>
+                    <div>
+                        <label for="stock-price">Preço de venda (R$)</label>
+                        <input id="stock-price" type="number" min="0" step="0.01" required />
+                    </div>
+                </div>
+                <p id="stock-profit" class="field-help"></p>
+                <p class="field-help">
+                    A quantidade é adicionada ao saldo atual. Preços novos não alteram vendas já
+                    registradas.
+                </p>
+                <p id="stock-error" role="alert" class="commerce-error"></p>
+                <div class="form-actions">
+                    <button id="stock-save" type="submit">Confirmar reposição</button>
+                </div>
+            </form>
+        </dialog>
+        <dialog id="shortcuts-dialog">
+            <div class="dialog-header">
+                <h2>Atalhos Stockify</h2>
+                <button
+                    class="icon secondary"
+                    type="button"
+                    id="shortcuts-close"
+                    aria-label="Fechar atalhos"
+                >
+                    ×
+                </button>
+            </div>
+            <dl class="shortcuts-list">
+                <dt>F1</dt>
+                <dd>Nova venda</dd>
+                <dt>F2</dt>
+                <dd>Produtos e reposição</dd>
+                <dt>F3</dt>
+                <dd>Clientes da loja</dd>
+                <dt>F4</dt>
+                <dd>Fornecedores</dd>
+                <dt>F5</dt>
+                <dd>Pesquisar produto ou cadastro</dd>
+                <dt>Enter / F6</dt>
+                <dd>Abrir pagamento da venda</dd>
+                <dt>F8</dt>
+                <dd>Confirmar venda na etapa de pagamento</dd>
+                <dt>F9</dt>
+                <dd>Mostrar estes atalhos</dd>
+                <dt>Esc</dt>
+                <dd>Fechar a janela atual</dd>
+            </dl>
+            <p class="field-help">
+                Na busca de produtos, Enter seleciona o primeiro resultado disponível.
+            </p>
+        </dialog>
+        <button id="shortcuts-button" class="shortcut-help" type="button">
+            Atalhos
+            <kbd>F9</kbd>
+        </button>
+    <dialog id="cash-dialog"><div class="dialog-header"><h2 id="cash-dialog-title"></h2><button type="button" class="secondary" id="cash-dialog-close">Fechar</button></div><div id="cash-dialog-content"></div></dialog>
+</body>
+</html>
+
+

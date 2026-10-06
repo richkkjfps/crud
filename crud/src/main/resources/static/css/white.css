@@ -1,0 +1,65 @@
+/* White theme shared by access, inventory, commerce and register screens. */
+:root {
+ color-scheme:light;
+ --bg:#fff;--surface:#fff;--surface-2:#fff;--accent:#2563eb;
+ --text:#1f2937;--muted:#667085;--border:#e2e6ed;
+ background:#fff;color:#1f2937;
+}
+html,body,body:not(.access-page),.access-page,body:not(.access-page) aside,body:not(.access-page) main {
+ background:#fff;background-image:none;color:#1f2937;
+}
+body:not(.access-page){color-scheme:light}
+body :is(input,select,textarea,button,.access-benefits li,.benefit-icon,.access-tabs,
+ .access-tabs button.selected,.access-submit:disabled,#sale-checkout-fields,.cash-stat,
+ .catalog,.sales-focus,.profit-summary>div,.ledger-balance,.ledger-card,.access-card,
+ .access-logo,.account-avatar,.sale-total,.shortcut-help,dialog,th,td,tr){
+ background:#fff!important;background-image:none!important;border-color:#dbe1e9;
+}
+.access-card input,.access-tabs button.selected,.access-submit:disabled,.benefit-icon,
+#sale-checkout-fields h3,.sales-focus p,.product-selected,.access-benefits p,
+.access-card>p,.access-intro-note,.access-card>h2,.access-intro h1,
+.access-intro h1 strong,.access-intro h1 em,.access-card label{color:#1f2937}
+.access-card input:focus{outline-color:#2563eb}
+body:not(.access-page) aside{scrollbar-color:#d3d8e0 #fff}
+main,aside,header,.catalog,.toolbar,.catalog-filters,.table-wrap,table,thead,tbody,tr,th,td,
+tbody tr:nth-child(even) td,tbody tr:hover,tbody tr:hover td,
+.cash-dashboard,.cash-stat,.cash-warning,.sales-focus,.profit-summary,.profit-summary>div,
+.sale-item,.ledger-balance,.ledger-card,.sale-total,.checkout-bar,.shortcut-help,.shortcuts-list,
+.access-card,.access-form,.access-tabs,.access-tab,.access-logo,.access-badge,.story-art,
+dialog,input,select,textarea {
+ background:#fff;background-image:none;color:#1f2937;border-color:#e2e6ed;
+}
+.access-page{font-family:Segoe UI,Arial,sans-serif}
+.access-stars{display:none}
+.access-brand,.access-brand span,.brand,.brand span,.access-intro h1,.access-intro h1 span,
+.access-card h2,.access-title,.access-logo,.access-intro strong,dialog h2,dialog h3,
+.sale-total strong,.cash-stat strong,.profit-summary strong{color:#1f2937}
+.access-intro p,.access-intro small,.access-brand small,.access-footer,.access-help,.access-tag,
+.access-eyebrow,.access-description,.access-subtitle,.access-intro li,.access-card label,
+.access-password button,.access-forgot,.nav-label,.platform-label,.aside-footer,
+.subtitle,.toolbar p,.eyebrow,.field-help,.cash-stat span,.cash-report>p,.ledger-dialog p,
+th,footer,.commerce-empty,.sale-item small,.shortcuts-list dd,.profit-summary p {
+ color:#667085;
+}
+input::placeholder,textarea::placeholder{color:#7b8494}
+input:focus,select:focus,textarea:focus{outline-color:#2563eb;border-color:#2563eb}
+button,.sale-launch,body:not(.access-page) .sale-launch,.sales-focus button,
+.access-submit,.access-password button,.access-tabs button,.access-tab,.nav,
+button.secondary,button.delete,button:hover,button.secondary:hover,.nav.active,
+.active,.account-avatar,.sale-item-remove,.shortcut-help {
+ background:#fff;background-image:none;color:#1f2937;border:1px solid #d4dbe5;
+}
+button:hover,button:focus-visible,.nav.active,.access-tab.active{border-color:#2563eb;color:#1d4ed8}
+.sale-launch,.access-submit,.sales-focus button{border-color:#2563eb;color:#1d4ed8}
+button:disabled{background:#fff;color:#929aa7;opacity:.65}
+.status-active,.status-inactive,.negative-profit{background:#fff}
+.status-active{color:#147746}.status-inactive{color:#b45309}
+#notice,#notice.error,#commerce-notice,.commerce-error,#form-error,#stock-error,
+#sale-error,#payment-error,#login-message,.cash-status{background:#fff;color:#b42318}
+#notice:not(.error),#commerce-notice:not(.commerce-error){color:#147746}
+.cash-status:empty{display:none}.cash-status{font-size:13px;margin:16px 0 0}
+.access-card{border:1px solid #e2e6ed;box-shadow:0 8px 35px #1f29370b}
+.access-logo{border-color:#d4dbe5}.access-tabs{border-color:#e2e6ed}
+.inventory-group td{background:#fff!important}
+dialog::backdrop{background:#1f29374d}
+@media(max-width:600px){tbody tr,td:before,.products-row td:before{background:#fff;color:#667085;border-color:#e2e6ed}}
