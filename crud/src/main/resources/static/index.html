@@ -3,23 +3,29 @@
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
-        <title>Stockify | Gestão</title>
+        <title>Mercado Vale Verde | Gestão</title>
         <link rel="stylesheet" href="/css/style.css" />
         <link rel="stylesheet" href="/css/commerce.css" />
         <link rel="stylesheet" href="/css/operations.css" />
         <script src="/js/app.js" defer></script>
         <script src="/js/commerce.js" defer></script>
         <script src="/js/operations.js" defer></script>
-        <script src="/js/cash.js" defer></script>
+        <script src="/js/cash.js?v=2" defer></script>
+        <script src="/js/progress.js?v=1" defer></script>
         <link rel="stylesheet" href="/css/cash.css" />
         <link rel="stylesheet" href="/css/light.css?v=2" />
+        <link rel="stylesheet" href="/css/refinement.css?v=4" />
+        <link rel="stylesheet" href="/css/usability.css?v=1" />
+        <script src="/js/usability.js?v=1" defer></script>
+        <link rel="stylesheet" href="/css/minimal.css?v=1" />
+        <link rel="stylesheet" href="/css/theme.css?v=3" />
+        <script src="/js/theme.js?v=3"></script>
+        <link rel="stylesheet" href="/css/market-brand.css?v=1" />
     </head>
     <body>
+        <a class="skip-link" href="#main-content">Pular para o conteúdo</a>
         <aside>
-            <a class="brand" href="/">
-                ◈
-                <span>Stockify</span>
-            </a>
+            <a class="brand market-brand" href="/" aria-label="Mercado Vale Verde — início"><svg class="market-cart" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h6l6 26h23M13 14h30l-5 14H16M23 14l2 14m10-14-2 14M15 21h25"/><circle cx="20" cy="39" r="3"/><circle cx="36" cy="39" r="3"/></svg><span class="market-wordmark"><span class="market-caption">Mercado</span><span class="market-name">Vale Verde</span></span></a>
             <button type="button" class="sale-launch" id="quick-sale">
                 + Nova venda
                 <kbd>F1</kbd>
@@ -37,10 +43,6 @@
                 <button class="nav" data-commerce="suppliers">▣ Fornecedores</button>
                 <button class="nav" data-view="categories" data-admin hidden>◇ Categorias</button>
                 <button class="nav" data-view="users" data-admin hidden>♙ Usuários</button>
-                <p class="platform-label" data-owner hidden>ADMINISTRAÇÃO STOCKIFY</p>
-                <button class="nav" data-view="clients" data-owner hidden>
-                    ▣ Empresas contratantes
-                </button>
             </nav>
             <div class="aside-footer">
                 <span class="account-avatar" id="avatar">…</span>
@@ -51,8 +53,7 @@
                 <button id="logout" class="secondary" type="button">Sair</button>
             </div>
         </aside>
-        <main>
-<section id="cash-dashboard" class="cash-dashboard" aria-label="Meu caixa"></section>
+        <main id="main-content" tabindex="-1">
             <header>
                 <div>
                     <p class="eyebrow" id="company-label">Stockify</p>
@@ -64,11 +65,30 @@
                 </div>
                 <button id="new-entry" disabled>+ Novo produto</button>
             </header>
+
+<section id="cash-dashboard" class="cash-dashboard" aria-label="Meu caixa"></section>
+<section class="journey" id="store-journey" aria-labelledby="journey-title" hidden>
+                <details id="journey-details">
+                    <summary>
+                        <span class="journey-heading"><span class="eyebrow">SUA LOJA EM MOVIMENTO</span><span id="journey-title">Primeiros passos</span><span id="journey-summary">Consultando seus cadastros…</span></span>
+                        <span class="journey-meter"><span id="journey-count">— de 3</span><progress id="journey-progress" max="3" value="0" aria-label="Etapas concluídas"></progress><span class="journey-expand">Ver etapas</span></span>
+                    </summary>
+                    <p class="journey-help">Um guia para organizar sua loja, no seu ritmo. As etapas refletem os registros atuais da empresa.</p>
+                    <ol class="journey-steps">
+                        <li data-step="products"><span class="step-mark" aria-hidden="true">1</span><h3>Organize seu catálogo</h3><p>Cadastre os produtos que sua loja oferece.</p><span class="step-state">Consultando…</span><button type="button" class="secondary" data-journey-action="products">Ver produtos</button></li>
+                        <li data-step="customers"><span class="step-mark" aria-hidden="true">2</span><h3>Conheça seus clientes</h3><p>Guarde os contatos de quem compra com você.</p><span class="step-state">Consultando…</span><button type="button" class="secondary" data-journey-action="customers">Ver clientes</button></li>
+                        <li data-step="sales"><span class="step-mark" aria-hidden="true">3</span><h3>Registre uma venda</h3><p>Acompanhe a venda e a saída do estoque.</p><span class="step-state">Consultando…</span><button type="button" class="secondary" data-journey-action="sales">Nova venda</button></li>
+                    </ol>
+                    <p id="journey-feedback" role="status" aria-live="polite" class="journey-feedback"></p>
+                    <button type="button" class="secondary" id="journey-refresh">Atualizar progresso</button>
+                </details>
+            </section>
+
             <section class="catalog" id="catalog-panel">
                 <div class="toolbar">
                     <div>
                         <h2 id="list-title">Todos os produtos</h2>
-                        <p id="list-description">Seu catálogo, sempre à mão.</p>
+                        <p id="list-description">Consulte e atualize seus produtos.</p>
                     </div>
                     <div class="filters">
                         <input
@@ -565,5 +585,15 @@
     <dialog id="cash-dialog"><div class="dialog-header"><h2 id="cash-dialog-title"></h2><button type="button" class="secondary" id="cash-dialog-close">Fechar</button></div><div id="cash-dialog-content"></div></dialog>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
 
 

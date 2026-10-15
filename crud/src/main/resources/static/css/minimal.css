@@ -1,0 +1,59 @@
+/* Stockify: interface discreta, com ênfase no conteúdo. */
+:root, body:not(.access-page) {
+ --color-canvas:#f7f7f6; --color-heading:#252827; --color-copy:#414644;
+ --color-muted:#656c68; --color-line:#e1e4e1; --color-action:#3c5b4e;
+ --color-action-soft:#eef2ef; --accent:#3c5b4e;
+}
+html,body,.access-page { background:#f7f7f6; color:#414644; }
+body { font-family:Segoe UI,Arial,sans-serif; }
+body h1,body h2,body h3,body #page-title,body #list-title,body #commerce-title { color:#252827; }
+body button,body:not(.access-page) .sale-launch,body:not(.access-page) #new-entry { background:#3c5b4e; border-color:#3c5b4e; color:#fff; box-shadow:none; border-radius:6px; }
+body button:hover,body:not(.access-page) .sale-launch:hover,body:not(.access-page) #new-entry:hover { background:#304b3f; border-color:#304b3f; }
+body button.secondary,body button.icon { background:#fff; color:#414644; border-color:#d9deda; }
+body button.secondary:hover,body button.icon:hover { background:#f2f4f2; color:#252827; border-color:#b8c1ba; }
+body:not(.access-page) aside { background:#fff; border-right:1px solid #e1e4e1; }
+body:not(.access-page) aside .brand,body:not(.access-page) aside .brand span { color:#252827; font-size:1.4rem; font-weight:650; letter-spacing:-.04em; }
+body .nav { border-radius:5px; }
+body .nav.active { background:#eef2ef; color:#304b3f; border-color:transparent; box-shadow:none; }
+body .nav:hover { background:#f4f5f3; color:#252827; }
+body .nav-label { color:#747a75; letter-spacing:.06em; }
+body:not(.access-page) main > header h1 { font-size:clamp(1.6rem,2.5vw,2rem); font-weight:600; letter-spacing:-.035em; }
+body .subtitle,body #list-description { color:#656c68; font-size:.875rem; }
+body .catalog,body .cash-dashboard,body .journey,body dialog { border:1px solid #e1e4e1; border-radius:7px; box-shadow:none; }
+body:not(.access-page) .cash-dashboard { border:1px solid #e1e4e1; padding:20px; }
+body:not(.access-page) .cash-top h2 { font-size:1.125rem; font-weight:600; }
+body .cash-stats { gap:0; }
+body:not(.access-page) .cash-stat,body:not(.access-page) .cash-stat:nth-child(n) { background:transparent!important; border:0; border-left:1px solid #e1e4e1; border-radius:0; padding:8px 20px; }
+body:not(.access-page) .cash-stat:first-child { border-left:0; }
+body:not(.access-page) .cash-stat strong { color:#252827; font-size:clamp(1.25rem,2vw,1.6rem); font-weight:600; }
+body .cash-stat span { color:#656c68; }
+body thead th { background:#f5f6f4!important; color:#59615b; font-weight:600; }
+body tbody tr:hover td { background:#f6f8f5!important; }
+body .inventory-group td { background:#f7f8f6!important; color:#414644; }
+body .account-avatar,body .step-mark { background:#eef2ef; color:#3c5b4e; border-color:#e1e4e1; }
+body .journey progress { accent-color:#5d7768; }
+body .journey progress::-webkit-progress-value { background:#5d7768; }
+body .sales-focus,body .profit-summary>div { background:#f7f8f6!important; border-color:#e1e4e1; }
+body .status-active,body .profit-summary>div:last-of-type strong { color:#3c5b4e; }
+body button.delete { background:#fff; color:#914c48; border-color:#e4d6d4; }
+body button.delete:hover { background:#faf2f1; color:#7a3a36; border-color:#cfb3af; }
+body button:disabled,body .access-submit:disabled { background:#eceeeb; color:#737a74; border-color:#e1e4e1; }
+.access-page { --access-blue:#3c5b4e; --access-blue-deep:#304b3f; --access-ink:#252827; --access-muted:#656c68; --access-cloud:#f7f7f6; --access-line:#e1e4e1; --access-input-line:#c6cec7; --access-soft-blue:#eef2ef; --access-radius:8px; --access-field-radius:6px; }
+.access-page .access-stars { display:none; }
+.access-page .access-logo { width:36px; height:36px; border-radius:6px; background:#eef2ef; color:#3c5b4e; font-size:1.5rem; }
+.access-page .access-brand { font-size:1.5rem; }
+.access-page .access-intro h1 { font-size:clamp(2rem,3.4vw,3rem); font-weight:550; letter-spacing:-.04em; }
+.access-page .access-intro h1 span { color:#252827; }
+.access-page .access-card { border:1px solid #e1e4e1; border-radius:8px; box-shadow:none; }
+.access-page .access-card > h2 { font-size:1.5rem; font-weight:600; }
+.access-page .access-tabs button.selected { color:#304b3f; box-shadow:none; }
+.access-page .access-submit { background:#3c5b4e; border-color:#3c5b4e; box-shadow:none; letter-spacing:0; text-transform:none; }
+.access-page .access-submit:hover { background:#304b3f; border-color:#304b3f; }
+.access-page .access-password button,.access-page .access-forgot { background:transparent; border-color:transparent; color:#59675d; }
+body :is(button,a,input,select,textarea):focus-visible { outline:2px solid #5d7768; outline-offset:3px; }
+@media(max-width:650px) {
+ body:not(.access-page) .cash-stat:nth-child(odd) { border-left:0; }
+ body:not(.access-page) .cash-stat:nth-child(n+3) { border-top:1px solid #e1e4e1; }
+ body:not(.access-page) .cash-stat:nth-child(n) { padding:12px; }
+}
+@media print { body:not(.access-page) .cash-stat:nth-child(n) { background:#fff!important; } }

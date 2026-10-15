@@ -199,6 +199,7 @@
             ]);
             if (version !== loadingVersion) return;
             records = { customers, suppliers, sales, products };
+            window.StockifyProgress?.update({ customers, sales, products });
             profits = report;
             notify('');
             render();

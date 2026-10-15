@@ -1,0 +1,27 @@
+/* Ajustes de leitura e navegação — Stockify */
+body:not(.access-page) .toolbar h2 { font-size:1.2rem; line-height:1.4; }
+body:not(.access-page) thead th { font-size:.8125rem; letter-spacing:.02em; }
+body:not(.access-page) tbody td { font-size:.9375rem; line-height:1.5; }
+body:not(.access-page) .nav { font-size:.9375rem; }
+body:not(.access-page) .nav.active { font-weight:700; }
+body:not(.access-page) .table-wrap:focus-visible { outline:3px solid #214bd7; outline-offset:-3px; }
+body:not(.access-page) .filters input { width:clamp(180px,24vw,340px); }
+body:not(.access-page) dialog { max-height:calc(100dvh - 32px); overflow:auto; }
+body:not(.access-page) .mobile-menu-toggle { display:none; }
+@media(max-width:600px) {
+ body:not(.access-page) aside { display:flex; flex-wrap:wrap; align-items:center; gap:12px; }
+ body:not(.access-page) aside .brand { padding:0; margin-right:auto; }
+ body:not(.access-page) .mobile-menu-toggle { display:inline-flex; align-items:center; justify-content:center; }
+ body:not(.access-page) .sale-launch { width:100%; margin:0; }
+ body:not(.access-page) aside .nav-label { display:none; }
+ body:not(.access-page) aside nav { width:100%; margin:0; gap:8px; }
+ body:not(.access-page) aside nav[hidden] { display:none; }
+ body:not(.access-page) aside .nav:not([hidden]) { flex:1 1 145px; text-align:left; min-height:48px; }
+ body:not(.access-page) .aside-footer { width:100%; margin:0; }
+ body:not(.access-page) .toolbar { align-items:stretch; flex-direction:column; gap:16px; }
+ body:not(.access-page) .toolbar .filters { display:flex; flex-wrap:wrap; width:100%; gap:8px; }
+ body:not(.access-page) .filters input { width:100%; flex:1 1 100%; }
+ body:not(.access-page) .catalog-filters { display:flex; flex-wrap:wrap; gap:10px; }
+ body:not(.access-page) .catalog-filters select { flex:1 1 100%; width:100%; }
+ body:not(.access-page) dialog { width:calc(100% - 24px); max-width:calc(100% - 24px); padding:20px; }
+}

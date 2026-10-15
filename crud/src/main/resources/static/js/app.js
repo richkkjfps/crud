@@ -326,6 +326,7 @@ async function refresh() {
             clients: me.role === 'OWNER' ? results[3] || [] : []
         };
         updateChoices();
+        window.StockifyProgress?.update({ products: data.products });
         notice('');
         return true;
     } catch (error) {
@@ -625,6 +626,7 @@ async function init() {
         showAccount();
         await refresh();
         await window.StockifyCash.init();
+        window.StockifyProgress?.init();
     } catch (error) {
         notice(error.message, true);
     }

@@ -45,6 +45,7 @@ public class SecurityConfig {
                     .requestMatchers(
                         "/login.html",
                         "/js/login.js",
+                        "/js/theme.js",
                         "/css/**",
                         "/auth/csrf",
                         "/auth/register",
@@ -92,3 +93,4 @@ public class SecurityConfig {
             .build();
     }
 }
+

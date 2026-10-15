@@ -5,9 +5,13 @@ let mode = 'login',
     pending = false;
 const params = new URLSearchParams(location.search);
 $('company').value = params.get('company') || '';
+function message(text, kind = 'error') {
+    $('login-message').textContent = text || '';
+    $('login-message').className = kind;
+}
 if (params.has('error'))
-    $('login-message').textContent = 'Empresa, e-mail ou senha incorretos, ou acesso não liberado.';
-else if (params.has('logout')) $('login-message').textContent = 'Você saiu da sua conta.';
+    message('Empresa, e-mail ou senha incorretos, ou acesso não liberado.');
+else if (params.has('logout')) message('Você saiu da sua conta.', 'info');
 function changeMode(next) {
     if (pending) return;
     mode = next;
@@ -23,26 +27,35 @@ function changeMode(next) {
         ? 'Solicite acesso ao painel da sua empresa'
         : 'Entre na conta da sua empresa';
     $('login-submit').textContent = signup ? 'CRIAR CONTA' : 'ENTRAR';
-    $('login-message').textContent = '';
+    message('');
+    $('access-form').setAttribute('aria-labelledby', signup ? 'register-tab' : 'login-tab');
     for (const id of ['login-tab', 'register-tab']) {
         const selected = (id === 'register-tab') === signup;
         $(id).classList.toggle('selected', selected);
         $(id).setAttribute('aria-selected', selected);
+        $(id).tabIndex = selected ? 0 : -1;
     }
 }
 $('login-tab').addEventListener('click', () => changeMode('login'));
 $('register-tab').addEventListener('click', () => changeMode('register'));
+document.querySelector('.access-tabs').addEventListener('keydown', event => {
+    if (pending || !['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+    event.preventDefault();
+    const next = event.key === 'Home' ? 'login' : event.key === 'End' ? 'register' : mode === 'login' ? 'register' : 'login';
+    changeMode(next);
+    $(next === 'login' ? 'login-tab' : 'register-tab').focus();
+});
 $('toggle-password').addEventListener('click', () => {
     const input = $('password');
     input.type = input.type === 'password' ? 'text' : 'password';
+    $('toggle-password').setAttribute('aria-pressed', input.type === 'text');
     $('toggle-password').setAttribute(
         'aria-label',
         input.type === 'password' ? 'Mostrar senha' : 'Ocultar senha'
     );
 });
 $('forgot-password').addEventListener('click', () => {
-    $('login-message').textContent =
-        'Peça ao administrador da sua empresa para redefinir sua senha na área de Usuários.';
+    message('Peça ao administrador da sua empresa para redefinir sua senha na área de Usuários.', 'info');
 });
 async function prepare() {
     try {
@@ -53,8 +66,7 @@ async function prepare() {
         $('csrf').value = csrf.token;
         $('login-submit').disabled = false;
     } catch {
-        $('login-message').textContent =
-            'Não foi possível conectar. Atualize a página para tentar novamente.';
+        message('Não foi possível conectar. Atualize a página para tentar novamente.');
     }
 }
 $('access-form').addEventListener('submit', async (event) => {
@@ -65,6 +77,7 @@ $('access-form').addEventListener('submit', async (event) => {
     $('company').value = $('company').value.trim().toLowerCase();
     if (mode === 'login') {
         pending = true;
+    $('access-form').setAttribute('aria-busy', 'true');
         $('login-submit').disabled = true;
         $('login-submit').textContent = 'ENTRANDO…';
         return;
@@ -72,11 +85,11 @@ $('access-form').addEventListener('submit', async (event) => {
     event.preventDefault();
     const password = $('password').value;
     if (password.length < 8 || new TextEncoder().encode(password).length > 72) {
-        $('login-message').textContent =
-            'Use uma senha com pelo menos 8 caracteres e no máximo 72 bytes.';
+        message('Use uma senha com pelo menos 8 caracteres e no máximo 72 bytes.');
         return;
     }
     pending = true;
+    $('access-form').setAttribute('aria-busy', 'true');
     $('login-submit').disabled = true;
     $('login-submit').textContent = 'ENVIANDO…';
     try {
@@ -92,12 +105,13 @@ $('access-form').addEventListener('submit', async (event) => {
         });
         const result = await response.json();
         if (!response.ok) throw new Error(result.message || 'Não foi possível enviar o cadastro.');
-        $('login-message').textContent = result.message;
+        message(result.message || 'Cadastro enviado. Aguarde a liberação do administrador.', 'success');
         $('password').value = '';
     } catch (error) {
-        $('login-message').textContent = error.message;
+        message(error.message);
     } finally {
         pending = false;
+        $('access-form').setAttribute('aria-busy', 'false');
         $('login-submit').disabled = false;
         $('login-submit').textContent = 'CRIAR CONTA';
     }

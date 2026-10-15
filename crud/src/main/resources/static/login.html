@@ -4,56 +4,33 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
         <meta name="theme-color" content="#ffffff" />
-        <title>Stockify | Acesso</title>
+        <title>Mercado Vale Verde | Acesso</title>
         <link rel="stylesheet" href="/css/style.css" />
-        <script src="/js/login.js" defer></script>
+        <script src="/js/login.js?v=3" defer></script>
         <link rel="stylesheet" href="/css/light.css?v=2" />
+        <link rel="stylesheet" href="/css/refinement.css?v=4" />
+        <link rel="stylesheet" href="/css/access-design.css?v=3" />
+        <link rel="stylesheet" href="/css/minimal.css?v=1" />
+        <link rel="stylesheet" href="/css/theme.css?v=3" />
+        <script src="/js/theme.js?v=3"></script>
+        <link rel="stylesheet" href="/css/market-brand.css?v=1" />
     </head>
     <body class="access-page">
         <div class="access-stars" aria-hidden="true"></div>
-        <div class="access-layout">
+        <main class="access-layout">
             <section class="access-intro">
-                <a class="access-brand" href="/login.html">
-                    <span class="access-logo" aria-hidden="true">ϟ</span>
-                    <span>
-                        Stockify
-                        <small>ÁREA DE ACESSO</small>
-                    </span>
-                </a>
+                <a class="access-brand market-brand" href="/login.html" aria-label="Mercado Vale Verde — acesso"><svg class="market-cart" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h6l6 26h23M13 14h30l-5 14H16M23 14l2 14m10-14-2 14M15 21h25"/><circle cx="20" cy="39" r="3"/><circle cx="36" cy="39" r="3"/></svg><span class="market-wordmark"><span class="market-caption">Mercado</span><span class="market-name">Vale Verde</span></span></a>
                 <h1>
-                    Seu negócio organizado.
+                    Sua loja,
                     <br />
-                    <span>Seu painel, do seu jeito.</span>
+                    <span>em ordem.</span>
                 </h1>
-                <div class="access-benefits">
-                    <article>
-                        <span class="benefit-icon">◇</span>
-                        <div>
-                            <h2>Um espaço para sua empresa</h2>
-                            <p>Produtos, categorias e acessos em um só lugar.</p>
-                        </div>
-                    </article>
-                    <article>
-                        <span class="benefit-icon">♙</span>
-                        <div>
-                            <h2>Sua equipe conectada</h2>
-                            <p>Contas individuais para quem trabalha com você.</p>
-                        </div>
-                    </article>
-                    <article>
-                        <span class="benefit-icon">ϟ</span>
-                        <div>
-                            <h2>Agilidade no dia a dia</h2>
-                            <p>Cadastre e encontre produtos pelo código de barras.</p>
-                        </div>
-                    </article>
-                </div>
-                <p class="access-intro-note">
-                    Simples para usar. Pronto para acompanhar seu negócio.
-                </p>
+                <p class="access-lead">Estoque, vendas e caixa em um só lugar.</p>
+
             </section>
             <section class="access-card" aria-labelledby="access-title">
-                <h2 id="access-title">Bem-vindo de volta</h2>
+                <p class="access-kicker">PAINEL DA EMPRESA</p>
+                <h2 id="access-title">Acesse sua loja</h2>
                 <p id="access-subtitle">Entre na conta da sua empresa</p>
                 <div class="access-tabs" role="tablist" aria-label="Escolha o acesso">
                     <button
@@ -71,12 +48,13 @@
                         type="button"
                         role="tab"
                         aria-selected="false"
+                        tabindex="-1"
                         aria-controls="access-form"
                     >
                         Cadastrar
                     </button>
                 </div>
-                <form id="access-form" action="/login" method="post">
+                <form id="access-form" action="/login" method="post" role="tabpanel" aria-labelledby="login-tab" aria-describedby="login-message">
                     <label for="company">Código da empresa</label>
                     <input
                         id="company"
@@ -85,8 +63,10 @@
                         pattern="[a-z0-9][a-z0-9-]{2,39}"
                         required
                         autocomplete="organization"
+                        aria-describedby="company-help"
                         placeholder="Ex.: minha-loja"
                     />
+                    <p id="company-help" class="company-help">Use o código informado pelo administrador da sua empresa.</p>
                     <div id="signup-name" hidden>
                         <label for="full-name">Nome completo</label>
                         <input
@@ -116,7 +96,7 @@
                             autocomplete="current-password"
                             placeholder="••••••••"
                         />
-                        <button type="button" id="toggle-password" aria-label="Mostrar senha">
+                        <button type="button" id="toggle-password" aria-label="Mostrar senha" aria-pressed="false">
                             ◉
                         </button>
                     </div>
@@ -132,10 +112,17 @@
                         ENTRAR
                     </button>
                 </form>
-                <p class="access-footer">Seu espaço. Sua equipe. Seus dados.</p>
+                <p class="access-footer">Mercado Vale Verde · Gestão da loja.</p>
             </section>
-        </div>
+        </main>
     </body>
 </html>
+
+
+
+
+
+
+
 
 
